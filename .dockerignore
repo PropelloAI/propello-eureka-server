@@ -1,0 +1,28 @@
+# Git
+.git
+.gitignore
+
+# Build output
+build/
+.gradle/
+.kotlin/
+out/
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
