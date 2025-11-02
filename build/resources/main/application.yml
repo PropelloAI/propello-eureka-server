@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: propello-eureka-server
+
+server:
+  port: ${EUREKA_PORT:8761}
+
+eureka:
+  instance:
+    hostname: ${EUREKA_HOSTNAME:localhost}
+  client:
+    # In standalone mode, don't register with itself
+    registerWithEureka: ${EUREKA_REGISTER_WITH_EUREKA:false}
+    fetchRegistry: ${EUREKA_FETCH_REGISTRY:false}
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    # Disable self-preservation mode in development
+    # In production, this should be true to handle network partitions
+    enable-self-preservation: ${EUREKA_SELF_PRESERVATION:false}
+    # How often to evict services that are not renewing (in ms)
+    eviction-interval-timer-in-ms: 5000
+    # Response cache update interval (in ms)
+    response-cache-update-interval-ms: 5000
+
+# Actuator endpoints for monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,eureka
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO
+    root: INFO
+
+---
+# Production profile
+spring:
+  config:
+    activate:
+      on-profile: production
+
+eureka:
+  server:
+    enable-self-preservation: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+
+logging:
+  level:
+    com.netflix.eureka: WARN
+    com.netflix.discovery: WARN
+    root: WARN
+
+---
+# Cluster mode (for high availability)
+spring:
+  config:
+    activate:
+      on-profile: cluster
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      # Comma-separated list of peer Eureka servers
+      defaultZone: ${EUREKA_PEER_URLS:http://eureka-peer-1:8761/eureka/,http://eureka-peer-2:8761/eureka/}
+  server:
+    enable-self-preservation: true
