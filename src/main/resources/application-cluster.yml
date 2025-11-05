@@ -1,0 +1,31 @@
+# Cluster Profile
+# Used for high availability Eureka cluster deployments
+# Activate with: SPRING_PROFILES_ACTIVE=cluster
+
+spring:
+  config:
+    activate:
+      on-profile: cluster
+
+# Cluster mode - register with peer Eureka servers
+eureka:
+  instance:
+    hostname: ${EUREKA_HOSTNAME:eureka-server}
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      # Comma-separated list of peer Eureka servers
+      defaultZone: ${EUREKA_PEER_URLS:http://eureka-peer-1:8761/eureka/,http://eureka-peer-2:8761/eureka/}
+  server:
+    # Enable self-preservation in cluster mode
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 60000
+    response-cache-update-interval-ms: 30000
+
+# Production-level logging for cluster
+logging:
+  level:
+    com.netflix.eureka: WARN
+    com.netflix.discovery: WARN
+    root: WARN

@@ -1,0 +1,30 @@
+# Docker Profile
+# Used when running in Docker Compose
+# Activate with: SPRING_PROFILES_ACTIVE=docker
+
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+# Standalone mode in Docker
+eureka:
+  instance:
+    hostname: ${EUREKA_HOSTNAME:eureka-server}
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+  server:
+    # Enable self-preservation in production/docker
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 60000
+    response-cache-update-interval-ms: 30000
+
+# Production-level logging
+logging:
+  level:
+    com.netflix.eureka: WARN
+    com.netflix.discovery: WARN
+    root: WARN

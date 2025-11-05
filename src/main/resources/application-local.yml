@@ -1,0 +1,30 @@
+# Local Development Profile
+# Used for local standalone Eureka server
+# Activate with: SPRING_PROFILES_ACTIVE=local
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+# Standalone mode - don't register with itself
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  server:
+    # Disable self-preservation in development for faster eviction
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 5000
+    response-cache-update-interval-ms: 5000
+
+# Debug logging for local development
+logging:
+  level:
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO
+    root: INFO
