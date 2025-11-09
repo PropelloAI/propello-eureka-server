@@ -1,0 +1,30 @@
+# Propello Eureka Server - Version Catalog
+# This catalog defines:
+# 1. Platform version for propello-platform BOM
+# 2. Platform-managed dependencies (no versions - from platform BOM)
+# 3. NO project-specific dependencies (Eureka is minimal)
+
+[versions]
+# ==================== Platform Version ====================
+propello-platform = "1.0.26"
+
+# ==================== NO Project-Specific Versions ====================
+# Eureka Server has no unique dependencies - all from platform BOM
+
+[libraries]
+# ==================== Spring Cloud (from platform BOM) ====================
+spring-cloud-starter-netflix-eureka-server = { module = "org.springframework.cloud:spring-cloud-starter-netflix-eureka-server" }
+
+# ==================== Spring Boot (from platform BOM) ====================
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+# ==================== Kotlin (from platform BOM) ====================
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib" }
+
+# ==================== Jackson (from platform BOM) ====================
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
+
+[bundles]
+kotlin = ["kotlin-reflect", "kotlin-stdlib"]

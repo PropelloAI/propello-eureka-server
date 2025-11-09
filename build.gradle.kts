@@ -36,32 +36,23 @@ repositories {
     }
 }
 
-extra["springCloudVersion"] = "2024.0.0"
-
 dependencies {
     // Propello Platform BOM - version from gradle.properties
-    val platformVersion = project.findProperty("propello.platform.version") as String? ?: "1.0.25"
+    val platformVersion = project.findProperty("propello.platform.version") as String? ?: "1.0.26"
     implementation(platform("com.propello:propello-platform:$platformVersion"))
 
-    // Eureka Server
-    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
+    // Eureka Server (from platform catalog)
+    implementation(libs.spring.cloud.starter.netflix.eureka.server)
 
-    // Spring Boot Actuator for monitoring
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    // Spring Boot Actuator for monitoring (from platform catalog)
+    implementation(libs.spring.boot.starter.actuator)
 
-    // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    // Kotlin (from platform catalog)
+    implementation(libs.bundles.kotlin)
+    implementation(libs.jackson.module.kotlin)
 
-    // Testing
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-}
-
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-    }
+    // Testing (from platform catalog)
+    testImplementation(libs.spring.boot.starter.test)
 }
 
 tasks.withType<KotlinCompile> {
