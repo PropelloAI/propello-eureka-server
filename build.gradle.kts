@@ -37,9 +37,8 @@ repositories {
 }
 
 dependencies {
-    // Propello Platform BOM - version from gradle.properties
-    val platformVersion = project.findProperty("propello.platform.version") as String? ?: "1.0.26"
-    implementation(platform("com.propello:propello-platform:$platformVersion"))
+    // Propello Platform BOM - version from version catalog (gradle/libs.versions.toml)
+    implementation(platform("com.propello:propello-platform:${libs.versions.propello.platform.get()}"))
 
     // Eureka Server (from platform catalog)
     implementation(libs.spring.cloud.starter.netflix.eureka.server)
