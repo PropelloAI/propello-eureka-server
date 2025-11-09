@@ -26,13 +26,21 @@ repositories {
         name = "Spring Snapshots"
         url = uri("https://repo.spring.io/snapshot")
     }
+    maven {
+        name = "GitHubPackages-Platform"
+        url = uri("https://maven.pkg.github.com/PropelloAI/propello-platform")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR") ?: findProperty("gpr.user") as String?
+            password = System.getenv("GITHUB_TOKEN") ?: findProperty("gpr.token") as String?
+        }
+    }
 }
 
 extra["springCloudVersion"] = "2024.0.0"
 
 dependencies {
-    // Propello Platform BOM
-    val platformVersion = project.findProperty("propello.platform.version") as String? ?: "1.0.9"
+    // Propello Platform BOM - version from gradle.properties
+    val platformVersion = project.findProperty("propello.platform.version") as String? ?: "1.0.25"
     implementation(platform("com.propello:propello-platform:$platformVersion"))
 
     // Eureka Server
