@@ -6,7 +6,7 @@
 
 [versions]
 # ==================== Platform Version ====================
-propello-platform = "1.0.73"
+propello-platform = "1.0.76"
 
 # ==================== NO Project-Specific Versions ====================
 # Eureka Server has no unique dependencies - all from platform BOM
